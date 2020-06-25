@@ -1,0 +1,11 @@
+html {
+	font-family: 'Oxygen Mono', monospace, sans-serif !important;
+}
+body {
+	margin: 0px;
+	background: #f8f8f8;
+}
+
+.MuiTypography-root {
+	font-family: 'Oxygen Mono', monospace, sans-serif !important;
+}

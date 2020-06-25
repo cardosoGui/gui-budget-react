@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import AppContext from './components/store/AppContext'
+import renderScreen from './components/navigation/renderScreen'
+import AppLayout from './components/AppLayout'
+import '../src/styles.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default () => {
+	const [ appState, setState ] = useState({
+		user: {
+			amount: 1815000000,
+			name: 'Guilherme Cardoso de Almeida',
+			accounts: [
+				{ name: 'Conta Principal', amount: 0, category: 'principal' },
+				{ name: 'Conta Principal', amount: 0, category: 'principal' }
+			]
+		},
+		screen: 'home',
+		theme: { light: { backgroundColor: '#f8f8f8', color: '#282828' } },
+		colorSchema: { primary: '#6690FF', success: '#40c949', info: '#3aa0ff', warning: '#ffb042', danger: '#ff3838' }
+	})
+	const setAppState = (value) => setState({ ...appState, ...value })
+
+	return (
+		<AppContext.Provider value={{ ...appState, setAppState }}>
+			<AppLayout>{renderScreen(appState.screen)}</AppLayout>
+		</AppContext.Provider>
+	)
 }
-
-export default App;
