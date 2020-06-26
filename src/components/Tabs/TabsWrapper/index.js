@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Tabs } from '@material-ui/core'
 import { useAppContext } from '../../store/AppContext'
-import moment from 'moment'
 
 export const months = [
 	'Janeiro',
@@ -20,17 +19,9 @@ export const months = [
 
 const TabsWrapper = ({ children }) => {
 	const { tabs, setAppState } = useAppContext()
-	const [ value, setValue ] = useState(tabs.index)
 
 	const handleChange = (event, newValue) => {
-		setValue(newValue)
 		setAppState({ tabs: { index: newValue } })
-	}
-
-	const fetchTodayMonth = () => {
-		const todayMonth = moment(new Date()).format('l')[0] - 1
-		setAppState({ tabs: { index: todayMonth } })
-		setValue(todayMonth)
 	}
 
 	const a11yProps = (index) => {
@@ -40,13 +31,9 @@ const TabsWrapper = ({ children }) => {
 		}
 	}
 
-	useEffect(() => {
-		fetchTodayMonth()
-	})
-
 	return (
 		<Tabs
-			value={value}
+			value={tabs.index}
 			onChange={handleChange}
 			indicatorColor="primary"
 			textColor="primary"
