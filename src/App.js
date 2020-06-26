@@ -22,6 +22,10 @@ export default () => {
 
 	return (
 		<AppContext.Provider value={{ ...appState, setAppState }}>
+			{/* <button style={{ height: 100 }} id="install_button">
+				Install
+			</button> */}
+
 			<AppLayout>{renderScreen(appState.screen)}</AppLayout>
 		</AppContext.Provider>
 	)

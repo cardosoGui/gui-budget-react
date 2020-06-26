@@ -8,17 +8,18 @@ const useStyles = makeStyles({
 		fontSize: (theme) => theme.fontSize,
 		color: (theme) => theme.color,
 		fontWeight: (theme) => theme.fontWeight,
-		textAlign: (theme) => theme.align
+		textAlign: (theme) => theme.align,
+		textTransform: (theme) => theme.capitalize
 	}
 })
 
-const Title = ({ size, align, type = 'regular', variant, color = '#282828', fontWeight, children }) => {
+const Title = ({ size, align, capitalize, type = 'regular', variant, color = '#282828', fontWeight, children }) => {
 	const { theme, colorSchema } = useAppContext()
 	const weight = { bold: '600', regular: '400' }
-
 	fontWeight = fontWeight ? fontWeight : weight[type]
 	color = variant ? colorSchema[variant] : color
-	const classes = useStyles({ fontSize: getSizeFont(size), fontWeight, align, ...theme.light, color })
+	capitalize = capitalize ? 'capitalize' : null
+	const classes = useStyles({ fontSize: getSizeFont(size), fontWeight, align, capitalize, ...theme.light, color })
 
 	return <Typography className={classes.root}>{children}</Typography>
 }
