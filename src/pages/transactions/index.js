@@ -1,12 +1,12 @@
 import React from 'react'
-import SectionMain from '../../SectionMain'
-import HeaderUI from '../../HeaderUI'
+import SectionMain from '../../components/SectionMain'
+import HeaderUI from '../../components/HeaderUI'
 import { MdSearch } from 'react-icons/md'
 import { IconButton, makeStyles } from '@material-ui/core'
-import Tabs from '../../Tabs'
+import Tabs from '../../components/Tabs'
+import { TabPanel } from '../../components/Tabs/TabsUI'
+import { months } from '../../components/Tabs/TabsWrapper'
 import { useAppContext } from '../../store/AppContext'
-import { TabPanel } from '../../Tabs/TabsUI'
-import { months } from '../../Tabs/TabsWrapper'
 
 const useStyles = makeStyles({ tabs: { background: '#fff' } })
 

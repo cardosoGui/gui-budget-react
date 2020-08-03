@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles, Typography } from '@material-ui/core'
-import { getSizeFont } from '../utils/getSizeFont'
-import { useAppContext } from '../store/AppContext'
+import { getSizeFont } from '../../utils/getSizeFont'
+import { useAppContext } from '../../store/AppContext'
 
 const useStyles = makeStyles({
 	root: {

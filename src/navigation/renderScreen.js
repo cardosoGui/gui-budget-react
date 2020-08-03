@@ -1,6 +1,6 @@
 import React from 'react'
-import HomePage from '../pages/home'
-import TransactionsPage from '../pages/TransactionsPage'
+import HomePage from '../components/pages/home'
+import TransactionsPage from '../components/pages/TransactionsPage'
 
 const renderScreen = (screen) => {
 	switch (screen) {

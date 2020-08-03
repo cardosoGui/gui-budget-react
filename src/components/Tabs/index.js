@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import TabsWrapper from './TabsWrapper'
 import TabsUI from './TabsUI'
 import moment from 'moment'
-import { useAppContext } from '../store/AppContext'
+import { useAppContext } from '../../store/AppContext'
 
 const Tabs = () => {
 	const { setAppState } = useAppContext()

@@ -1,5 +1,5 @@
 import React from 'react'
-import toCurrency from '../../utils/toCurrency'
+import toCurrency from '../../../utils/toCurrency'
 import SectionMain from '../../SectionMain'
 import { MdSettings } from 'react-icons/md'
 import { makeStyles, IconButton } from '@material-ui/core'

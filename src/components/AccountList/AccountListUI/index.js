@@ -2,7 +2,7 @@ import React from 'react'
 import { ListItem, Avatar, ListItemAvatar, ListItemText, ListItemSecondaryAction, makeStyles } from '@material-ui/core'
 import { MdAccountBalanceWallet } from 'react-icons/md'
 import Title from '../../Title'
-import toCurrency from '../../utils/toCurrency'
+import toCurrency from '../../../utils/toCurrency'
 
 const useStyles = makeStyles({ root: { padding: '8px' }, amountLabel: { margin: '10px 0' } })
 
