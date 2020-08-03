@@ -1,7 +1,7 @@
 import React from 'react'
 import SectionMain from '../SectionMain'
 import Title from '../Title'
-import { useAppContext } from '../store/AppContext'
+import { useAppContext } from '../../store/AppContext'
 import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles({

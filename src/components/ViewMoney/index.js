@@ -1,7 +1,7 @@
 import React from 'react'
 import ViewMoneyWrapper from './ViewMoneyWrapper'
 import ViewMoneyUI from './ViewMoneyUI'
-import { useAppContext } from '../store/AppContext'
+import { useAppContext } from '../../store/AppContext'
 
 const ViewMoney = () => {
 	const { user } = useAppContext()

@@ -9,6 +9,7 @@ const AppContext = React.createContext({
 	screen: 'home',
 	theme: { light: { backgroundColor: '#f8f8f8', color: '#282828' } },
 	colorSchema: { primary: '#6690FF', success: '#40c949', info: '#3aa0ff', warning: '#ffb042', danger: '#ff3838' },
+	tabs: { index: 0 },
 	setAppState() {}
 })
 

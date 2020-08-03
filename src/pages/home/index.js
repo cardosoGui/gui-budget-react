@@ -1,11 +1,11 @@
 import React from 'react'
-import SectionMain from '../../SectionMain'
-import ViewMoney from '../../ViewMoney'
-import CardUI from '../../CardUI'
-import Title from '../../Title'
+import SectionMain from '../../components/SectionMain'
+import ViewMoney from '../../components/ViewMoney'
+import CardUI from '../../components/CardUI'
+import Title from '../../components/Title'
 import { IconButton } from '@material-ui/core'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
-import AccountList from '../../AccountList'
+import AccountList from '../../components/AccountList'
 
 const HomePage = () => {
 	return (

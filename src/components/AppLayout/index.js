@@ -1,7 +1,7 @@
 import React from 'react'
 import AppLayoutWrapper from './AppLayoutWrapper'
 import AppLayoutUI from './AppLayoutUI'
-import NavigationBottom from '../navigation/NavigationBottom'
+import NavigationBottom from '../../navigation/NavigationBottom'
 
 const AppLayout = ({ children }) => {
 	return (

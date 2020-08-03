@@ -3,7 +3,7 @@ import { BottomNavigation, BottomNavigationAction, makeStyles } from '@material-
 import { RiHomeSmileLine, RiExchangeDollarLine } from 'react-icons/ri'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
 import { MdTimeline } from 'react-icons/md'
-import { useAppContext } from '../store/AppContext'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles({
 	root: {
@@ -16,35 +16,36 @@ const useStyles = makeStyles({
 })
 
 const NavigationBottom = () => {
-	const { screen, setAppState } = useAppContext()
+	const history = useHistory()
+	const currentRoute = history.location.pathname
 	const classes = useStyles()
 
-	const handleNavigation = (screen) => {
-		setAppState({ screen })
+	const handleNavigation = (route) => {
+		history.push(route)
 	}
 
 	const menus = [
-		{ screen: 'home', label: 'Início', icon: <RiHomeSmileLine size={25} color="#3366FF" /> },
-		{ screen: 'transactions', label: 'Transações', icon: <RiExchangeDollarLine size={25} color="#3366FF" /> },
+		{ route: '/', label: 'Início', icon: <RiHomeSmileLine size={25} color="#3366FF" /> },
+		{ route: 'transactions', label: 'Transações', icon: <RiExchangeDollarLine size={25} color="#3366FF" /> },
 		{
-			screen: 'income',
+			route: 'income',
 			label: 'Despesas',
 			icon: <BsFillPlusCircleFill size={25} color="#3366FF" />
 		},
-		{ screen: 'budget', label: 'Carteira', icon: <MdTimeline size={25} color="#3366FF" /> }
-		// { screen: 'settings', label: 'Objetivos', icon: <GiTriangleTarget size={25} color="#3366FF" /> }
+		{ route: 'budget', label: 'Carteira', icon: <MdTimeline size={25} color="#3366FF" /> }
+		// { route: 'settings', label: 'Objetivos', icon: <GiTriangleTarget size={25} color="#3366FF" /> }
 	]
 
 	return (
 		<BottomNavigation className={classes.root}>
-			{menus.map((button) => (
+			{menus.map(({ label, route, icon }) => (
 				<BottomNavigationAction
-					key={button.label}
-					onClick={(e) => handleNavigation(button.screen)}
-					showLabel={screen === button.screen}
-					label={button.label}
+					key={label}
+					onClick={(e) => handleNavigation(route)}
+					showLabel={currentRoute === route}
+					label={label}
 					color="#282828"
-					icon={button.icon}
+					icon={icon}
 				/>
 			))}
 		</BottomNavigation>
