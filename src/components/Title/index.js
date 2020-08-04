@@ -19,9 +19,20 @@ const Title = ({ size, align, capitalize, type = 'regular', variant, color = '#2
 	fontWeight = fontWeight ? fontWeight : weight[type]
 	color = variant ? colorSchema[variant] : color
 	capitalize = capitalize ? 'capitalize' : null
-	const classes = useStyles({ fontSize: getSizeFont(size), fontWeight, align, capitalize, ...theme.light, color })
+	const classes = useStyles({
+		fontSize: getSizeFont(size),
+		fontWeight,
+		align,
+		capitalize,
+		...theme.light,
+		color
+	})
 
-	return <Typography className={classes.root}>{children}</Typography>
+	return (
+		<Typography className={classes.root} id="title-text">
+			{children}
+		</Typography>
+	)
 }
 
 export default Title
