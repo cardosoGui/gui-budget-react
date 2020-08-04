@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import AppLayout from './components/AppLayout'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import '../src/styles.css'
 import HomePage from './pages/home'
 import TransactionsPage from './pages/transactions'
@@ -16,21 +16,32 @@ export default () => {
 				{ name: 'Conta Principal', amount: 0, category: 'principal' }
 			]
 		},
-		screen: 'home',
+		screen: window.location.pathname,
 		theme: { light: { backgroundColor: '#f8f8f8', color: '#282828' } },
-		colorSchema: { primary: '#6690FF', success: '#40c949', info: '#3aa0ff', warning: '#ffb042', danger: '#ff3838' },
+		colorSchema: {
+			primary: '#293845',
+			secondary: '#B2B5BA',
+			success: '#40c949',
+			info: '#3aa0ff',
+			warning: '#ffb042',
+			danger: '#ff3838'
+		},
 		tabs: { index: 0 }
 	})
+	const routes = [ '/', '/transactions', '/income', '/budget' ]
 	const setAppState = (value) => setState({ ...appState, ...value })
+
+	const checkUrl = () => {
+		return !routes.some((route) => route === window.location.pathname)
+	}
 
 	return (
 		<AppContext.Provider value={{ ...appState, setAppState }}>
 			<Router>
 				<AppLayout>
-					<Switch>
-						<Route path="/" exact component={HomePage} />
-						<Route path="/transactions" exact component={TransactionsPage} />
-					</Switch>
+					{checkUrl() && <Redirect to="/" />}
+					<Route path="/" exact component={HomePage} />
+					<Route path="/transactions" exact component={TransactionsPage} />
 				</AppLayout>
 			</Router>
 		</AppContext.Provider>
