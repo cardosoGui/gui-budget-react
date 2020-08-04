@@ -6,8 +6,10 @@ import Title from '../../components/Title'
 import { IconButton } from '@material-ui/core'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
 import AccountList from '../../components/AccountList'
+import { useAppContext } from '../../store/AppContext'
 
 const HomePage = () => {
+	const { colorSchema } = useAppContext()
 	return (
 		<SectionMain noPadding>
 			<ViewMoney />
@@ -18,7 +20,7 @@ const HomePage = () => {
 							Contas
 						</Title>
 						<IconButton size="small">
-							<BsFillPlusCircleFill size={25} color="#3366FF" />
+							<BsFillPlusCircleFill size={25} color={colorSchema['primary']} />
 						</IconButton>
 					</SectionMain>
 					<SectionMain>
@@ -31,7 +33,7 @@ const HomePage = () => {
 							Cartões
 						</Title>
 						<IconButton size="small">
-							<BsFillPlusCircleFill size={25} color="#3366FF" />
+							<BsFillPlusCircleFill size={25} color={colorSchema['primary']} />
 						</IconButton>
 					</SectionMain>
 					<SectionMain miniPadding position="center">
@@ -59,7 +61,7 @@ const HomePage = () => {
 							Objetivos
 						</Title>
 						<IconButton size="small">
-							<BsFillPlusCircleFill size={25} color="#3366FF" />
+							<BsFillPlusCircleFill size={25} color={colorSchema['primary']} />
 						</IconButton>
 					</SectionMain>
 					<SectionMain miniPadding position="center">

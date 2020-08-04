@@ -4,6 +4,7 @@ import { RiHomeSmileLine, RiExchangeDollarLine } from 'react-icons/ri'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
 import { MdTimeline } from 'react-icons/md'
 import { useHistory } from 'react-router-dom'
+import { useAppContext } from '../store/AppContext'
 
 const useStyles = makeStyles({
 	root: {
@@ -12,28 +13,35 @@ const useStyles = makeStyles({
 		bottom: 0,
 		width: '100%',
 		borderTop: 'solid 1px #0000001a'
-	}
+	},
+	icon: { color: ({ primary }) => primary }
 })
 
 const NavigationBottom = () => {
 	const history = useHistory()
-	const currentRoute = history.location.pathname
-	const classes = useStyles()
+	const { colorSchema, setAppState, screen } = useAppContext()
+
+	const classes = useStyles({ primary: colorSchema['primary'] })
 
 	const handleNavigation = (route) => {
+		setAppState({ screen: route })
 		history.push(route)
 	}
 
 	const menus = [
-		{ route: '/', label: 'Início', icon: <RiHomeSmileLine size={25} color="#3366FF" /> },
-		{ route: 'transactions', label: 'Transações', icon: <RiExchangeDollarLine size={25} color="#3366FF" /> },
+		{ route: '/', label: 'Início', icon: <RiHomeSmileLine size={25} className={classes.icon} /> },
 		{
-			route: 'income',
-			label: 'Despesas',
-			icon: <BsFillPlusCircleFill size={25} color="#3366FF" />
+			route: '/transactions',
+			label: 'Transações',
+			icon: <RiExchangeDollarLine size={25} className={classes.icon} />
 		},
-		{ route: 'budget', label: 'Carteira', icon: <MdTimeline size={25} color="#3366FF" /> }
-		// { route: 'settings', label: 'Objetivos', icon: <GiTriangleTarget size={25} color="#3366FF" /> }
+		{
+			route: '/income',
+			label: 'Despesas',
+			icon: <BsFillPlusCircleFill size={25} className={classes.icon} />
+		},
+		{ route: '/budget', label: 'Carteira', icon: <MdTimeline size={25} className={classes.icon} /> }
+		// { route: 'settings', label: 'Objetivos', icon: <GiTriangleTarget size={25} className={classes.icon} /> }
 	]
 
 	return (
@@ -42,7 +50,7 @@ const NavigationBottom = () => {
 				<BottomNavigationAction
 					key={label}
 					onClick={(e) => handleNavigation(route)}
-					showLabel={currentRoute === route}
+					showLabel={screen === route}
 					label={label}
 					color="#282828"
 					icon={icon}

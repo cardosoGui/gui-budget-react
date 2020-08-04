@@ -6,9 +6,16 @@ const AppContext = React.createContext({
 		name: 'Guilherme Cardoso de Almeida',
 		accounts: [ { name: 'Conta Principal', amount: 0, category: 'principal' } ]
 	},
-	screen: 'home',
+	screen: '/',
 	theme: { light: { backgroundColor: '#f8f8f8', color: '#282828' } },
-	colorSchema: { primary: '#6690FF', success: '#40c949', info: '#3aa0ff', warning: '#ffb042', danger: '#ff3838' },
+	colorSchema: {
+		primary: '#6690FF',
+		secondary: '#B2B5BA',
+		success: '#40c949',
+		info: '#3aa0ff',
+		warning: '#ffb042',
+		danger: '#ff3838'
+	},
 	tabs: { index: 0 },
 	setAppState() {}
 })
