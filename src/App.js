@@ -5,6 +5,7 @@ import '../src/styles.css'
 import HomePage from './pages/home'
 import TransactionsPage from './pages/transactions'
 import AppContext from './store/AppContext'
+import IncomePage from './pages/income'
 
 export default () => {
 	const [ appState, setState ] = useState({
@@ -20,7 +21,7 @@ export default () => {
 		theme: { light: { backgroundColor: '#f8f8f8', color: '#282828' } },
 		colorSchema: {
 			primary: '#293845',
-			secondary: '#B2B5BA',
+			secondary: '#5a656e',
 			success: '#40c949',
 			info: '#3aa0ff',
 			warning: '#ffb042',
@@ -28,7 +29,7 @@ export default () => {
 		},
 		tabs: { index: 0 }
 	})
-	const routes = [ '/', '/transactions', '/income', '/budget' ]
+	const routes = [ '/', '/transactions', '/transactions/add', '/income', '/budget' ]
 	const setAppState = (value) => setState({ ...appState, ...value })
 
 	const checkUrl = () => {
@@ -42,6 +43,7 @@ export default () => {
 					{checkUrl() && <Redirect to="/" />}
 					<Route path="/" exact component={HomePage} />
 					<Route path="/transactions" exact component={TransactionsPage} />
+					<Route path="/income" exact component={IncomePage} />
 				</AppLayout>
 			</Router>
 		</AppContext.Provider>

@@ -9,10 +9,11 @@ import { useAppContext } from '../../../store/AppContext'
 
 const useStyles = makeStyles(() => ({
 	root: {
+		borderRadius: '0 0 20px 20px',
 		padding: '10px',
 		justifyContent: 'center',
 		height: 150,
-		background: ({ primary }) => primary,
+		background: ({ colorTheme }) => colorTheme,
 		alignItems: 'center'
 	},
 	amount: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles(() => ({
 
 const ViewMoneyUI = ({ amount }) => {
 	const { colorSchema } = useAppContext()
-	const classes = useStyles({ primary: colorSchema['primary'] })
+	const classes = useStyles({ colorTheme: colorSchema['primary'] })
 	return (
 		<SectionMain className={classes.root} align="center">
 			<SectionMain noPadding position="space-between" align="center">
