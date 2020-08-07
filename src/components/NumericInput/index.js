@@ -5,11 +5,13 @@ import NumericInputUI from './NumericInputUI'
 const NumericInput = ({ formikProps }) => {
 	return (
 		<NumericInputWrapper>
-			{({ number }) => (
+			{({ number, component, type }) => (
 				<NumericInputUI
+					component={component}
 					number={number}
 					handleNumber={formikProps.setFieldValue}
 					value={formikProps.values.amount}
+					type={type}
 				/>
 			)}
 		</NumericInputWrapper>

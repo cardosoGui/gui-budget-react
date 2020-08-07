@@ -20,16 +20,21 @@ const useStyles = makeStyles(() => ({
 	}
 }))
 
-const HeaderBackgroundUI = ({ children }) => {
+const HeaderBackgroundUI = ({ children, rightComponent, backgroundColor = 'primary' }) => {
 	const { colorSchema } = useAppContext()
-	const classes = useStyles({ colorTheme: colorSchema['primary'] })
+	const classes = useStyles({ colorTheme: colorSchema[backgroundColor] })
 	const history = useHistory()
 	return (
 		<SectionMain className={classes.root}>
 			<SectionMain noPadding>
-				<IconButton size="small" onClick={() => history.goBack()}>
-					<ArrowBackIosIcon className={classes.iconButton} htmlColor="#fff" />
-				</IconButton>
+				<SectionMain noPadding item xs={2}>
+					<IconButton size="small" onClick={() => history.goBack()}>
+						<ArrowBackIosIcon className={classes.iconButton} htmlColor="#fff" />
+					</IconButton>
+				</SectionMain>
+				<SectionMain noPadding item xs={10} position="flex-end">
+					{rightComponent}
+				</SectionMain>
 			</SectionMain>
 			{children}
 		</SectionMain>
