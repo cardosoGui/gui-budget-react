@@ -2,12 +2,15 @@ import React from 'react'
 import SectionMain from '../../components/SectionMain'
 import HeaderBackgroundUI from '../../components/HeaderBackgroundUI'
 import Title from '../../components/Title'
-import { makeStyles, Fade, IconButton, Button, Collapse } from '@material-ui/core'
+import { makeStyles, Fade, IconButton, Button, Collapse, InputBase } from '@material-ui/core'
 import toCurrency from '../../utils/toCurrency'
 import { Formik } from 'formik'
 import NumericInput from '../../components/NumericInput'
 import { IoIosBackspace } from 'react-icons/io'
-import { FaMinus, FaPlus, FaExchangeAlt } from 'react-icons/fa'
+import { FiRepeat } from 'react-icons/fi'
+import { FaMinus, FaPlus, FaExchangeAlt, FaEdit, FaListUl, FaWallet, FaRegCalendarAlt } from 'react-icons/fa'
+import SelectInputUI from '../../components/SelectInputUI'
+import { useAppContext } from '../../store/AppContext'
 
 const useStyles = makeStyles({
 	amount: {
@@ -30,6 +33,7 @@ const useStyles = makeStyles({
 
 const IncomePage = () => {
 	const classes = useStyles()
+	const { colorSchema } = useAppContext()
 
 	const onDeleteNumber = (formikProps) => {
 		const { amount } = formikProps.values
@@ -69,18 +73,10 @@ const IncomePage = () => {
 		)
 	}
 
-	const TypeSymbols = ({ type }) => {
-		switch (type) {
-			case 'expense':
-				return <FaMinus fontSize={25} color="#fff" />
-			case 'income':
-				return <FaPlus fontSize={25} color="#fff" />
-			case 'transference':
-				return <FaExchangeAlt fontSize={25} color="#fff" />
-
-			default:
-				return <span />
-		}
+	const typeSymbols = {
+		expense: <FaMinus fontSize={25} color="#fff" />,
+		income: <FaPlus fontSize={25} color="#fff" />,
+		transference: <FaExchangeAlt fontSize={25} color="#fff" />
 	}
 
 	return (
@@ -105,7 +101,7 @@ const IncomePage = () => {
 								rightComponent={<TypeButtons formikProps={formikProps} />}
 							>
 								<SectionMain item xs={1}>
-									<TypeSymbols type={formikProps.values.type} />
+									{typeSymbols[formikProps.values.type]}
 								</SectionMain>
 								<SectionMain
 									item
@@ -124,6 +120,40 @@ const IncomePage = () => {
 									</IconButton>
 								</SectionMain>
 							</HeaderBackgroundUI>
+							<SectionMain>
+								<SelectInputUI icon={<FaEdit fontSize={30} color={colorSchema['primary']} />}>
+									<InputBase
+										id="standard-basic"
+										defaultValue="Escreva sobre a despesa"
+										inputProps={{ 'aria-label': 'naked' }}
+										fullWidth
+									/>
+								</SelectInputUI>
+								<SelectInputUI
+									titleText="Categoria"
+									icon={<FaListUl fontSize={30} color={colorSchema['primary']} />}
+								>
+									Selecione uma categoria de gastos
+								</SelectInputUI>
+								<SelectInputUI
+									titleText="Conta/Carteira"
+									icon={<FaWallet fontSize={30} color={colorSchema['primary']} />}
+								>
+									Escolha uma conta
+								</SelectInputUI>
+								<SelectInputUI
+									titleText="Data"
+									icon={<FaRegCalendarAlt fontSize={30} color={colorSchema['primary']} />}
+								>
+									{new Date().toLocaleDateString()}
+								</SelectInputUI>
+								<SelectInputUI
+									titleText="Recorrência"
+									icon={<FiRepeat fontSize={30} color={colorSchema['primary']} />}
+								>
+									Decida entre gasto fixo/temporário
+								</SelectInputUI>
+							</SectionMain>
 							<Collapse in={formikProps.values.showNumericInput}>
 								<NumericInput formikProps={formikProps} />
 							</Collapse>

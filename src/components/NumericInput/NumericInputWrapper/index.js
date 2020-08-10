@@ -42,14 +42,14 @@ const numbers = [
 const NumericInputWrapper = ({ children }) => {
 	const { colorSchema } = useAppContext()
 	const classes = useStyles({ colorTheme: colorSchema['primary'] })
+
 	return (
 		<SectionMain noPadding className={classes.root}>
 			<SectionMain noPadding position="space-around">
 				{numbers.map((numericInput) =>
 					children({
 						number: numericInput.value,
-						component: numericInput.component,
-						type: numericInput.value
+						component: numericInput.component
 					})
 				)}
 			</SectionMain>

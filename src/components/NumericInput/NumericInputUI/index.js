@@ -19,30 +19,13 @@ const useStyles = makeStyles({
 		height: '60px',
 		width: '100%',
 		borderRadius: '100%',
-
 		background: ({ colorTheme }) => colorTheme
 	}
 })
 
-const NumericInputUI = ({ number, handleNumber, value, component, type }) => {
+const NumericInputUI = ({ number, component, onNumberChange }) => {
 	const { colorSchema } = useAppContext()
-	const classes = useStyles({ colorTheme: colorSchema['secondary'], type })
-	const onNumberChange = () => {
-		switch (type) {
-			case 'clear':
-				handleNumber('amount', '0')
-				window.navigator.vibrate(50)
-				return
-			case 'submit':
-				handleNumber('showNumericInput', false)
-				window.navigator.vibrate(50)
-				return
-
-			default:
-				handleNumber('amount', value.concat(number))
-				window.navigator.vibrate(50)
-		}
-	}
+	const classes = useStyles({ colorTheme: colorSchema['secondary'] })
 	return !component ? (
 		<Button className={classes.button} onClick={onNumberChange} variant="outlined">
 			<span className={classes.buttonBackground}>
