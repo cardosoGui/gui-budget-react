@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AppLayout from './components/AppLayout'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import '../src/styles.css'
@@ -6,6 +6,7 @@ import HomePage from './pages/home'
 import TransactionsPage from './pages/transactions'
 import AppContext from './store/AppContext'
 import IncomePage from './pages/income'
+import payloadStorage from './utils/payloadStorage'
 
 export default () => {
 	const [ appState, setState ] = useState({
@@ -35,6 +36,10 @@ export default () => {
 	const checkUrl = () => {
 		return !routes.some((route) => route === window.location.pathname)
 	}
+
+	useEffect(() => {
+		payloadStorage()
+	}, [])
 
 	return (
 		<AppContext.Provider value={{ ...appState, setAppState }}>

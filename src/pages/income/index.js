@@ -2,11 +2,10 @@ import React from 'react'
 import SectionMain from '../../components/SectionMain'
 import HeaderBackgroundUI from '../../components/HeaderBackgroundUI'
 import Title from '../../components/Title'
-import { makeStyles, Fade, IconButton, Button, Collapse, InputBase } from '@material-ui/core'
+import { makeStyles, Fade, Button, InputBase } from '@material-ui/core'
 import toCurrency from '../../utils/toCurrency'
 import { Formik } from 'formik'
 import NumericInput from '../../components/NumericInput'
-import { IoIosBackspace } from 'react-icons/io'
 import { FiRepeat } from 'react-icons/fi'
 import { FaMinus, FaPlus, FaExchangeAlt, FaEdit, FaListUl, FaWallet, FaRegCalendarAlt } from 'react-icons/fa'
 import SelectInputUI from '../../components/SelectInputUI'
@@ -20,7 +19,6 @@ const useStyles = makeStyles({
 		padding: 0,
 		width: 'inherit'
 	},
-
 	typeButton: {
 		display: 'flex',
 		flexDirection: 'column'
@@ -34,11 +32,6 @@ const useStyles = makeStyles({
 const IncomePage = () => {
 	const classes = useStyles()
 	const { colorSchema } = useAppContext()
-
-	const onDeleteNumber = (formikProps) => {
-		const { amount } = formikProps.values
-		formikProps.setFieldValue('amount', amount.substring(0, amount.length - 1))
-	}
 
 	const TypeButtons = ({ formikProps }) => {
 		const typeIncomeButtons = [
@@ -90,6 +83,7 @@ const IncomePage = () => {
 						account: '',
 						date: new Date().toLocaleDateString(),
 						recurrence: '',
+						category: null,
 						backgroundColor: 'danger',
 						showNumericInput: true
 					}}
@@ -100,12 +94,7 @@ const IncomePage = () => {
 								backgroundColor={formikProps.values.backgroundColor}
 								rightComponent={<TypeButtons formikProps={formikProps} />}
 							>
-								<SectionMain item xs={1}>
-									{typeSymbols[formikProps.values.type]}
-								</SectionMain>
 								<SectionMain
-									item
-									xs={11}
 									position="flex-end"
 									alignItems="center"
 									onClick={() =>
@@ -115,9 +104,8 @@ const IncomePage = () => {
 									<Title color="#fff" size="big">
 										<code className={classes.amount}>{toCurrency(formikProps.values.amount)}</code>
 									</Title>
-									<IconButton onClick={() => onDeleteNumber(formikProps)}>
-										<IoIosBackspace fontSize={40} color="#fff" />
-									</IconButton>
+									&nbsp;
+									{typeSymbols[formikProps.values.type]}
 								</SectionMain>
 							</HeaderBackgroundUI>
 							<SectionMain>
@@ -154,9 +142,8 @@ const IncomePage = () => {
 									Decida entre gasto fixo/temporário
 								</SelectInputUI>
 							</SectionMain>
-							<Collapse in={formikProps.values.showNumericInput}>
-								<NumericInput formikProps={formikProps} />
-							</Collapse>
+
+							<NumericInput formikProps={formikProps} />
 						</form>
 					)}
 				</Formik>

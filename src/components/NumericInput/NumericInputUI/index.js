@@ -7,8 +7,8 @@ const useStyles = makeStyles({
 	button: {
 		padding: 0,
 		borderRadius: '100%',
-		height: '60px',
-		width: '60px',
+		height: '20vw',
+		width: '20vw',
 		margin: '10px',
 		background: ({ colorTheme }) => colorTheme
 	},
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-		height: '60px',
+		height: '20vw',
 		width: '100%',
 		borderRadius: '100%',
 		background: ({ colorTheme }) => colorTheme
