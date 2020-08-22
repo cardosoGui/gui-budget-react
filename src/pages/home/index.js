@@ -48,7 +48,7 @@ const HomePage = () => {
 								alt="credit card animation"
 								width="100px"
 								height="100px"
-								src="https://firebasestorage.googleapis.com/v0/b/gui-budget.appspot.com/o/animations%2Fcreditcard_animation.gif?alt=media&token=89775e37-75fb-46de-970f-076a67704d88"
+								src="https://firebasestorage.googleapis.com/v0/b/MeuGasto.appspot.com/o/animations%2Fcreditcard_animation.gif?alt=media&token=89775e37-75fb-46de-970f-076a67704d88"
 							/>
 							{/* <BsCreditCard size={50} color="#0000008a" /> */}
 						</SectionMain>
@@ -77,7 +77,7 @@ const HomePage = () => {
 								alt="target_animation"
 								width="100px"
 								height="100px"
-								src="https://firebasestorage.googleapis.com/v0/b/gui-budget.appspot.com/o/animations%2Ftarget_animation.gif?alt=media&token=ef598681-fed9-4a55-84a5-e63689cf533b"
+								src="https://firebasestorage.googleapis.com/v0/b/MeuGasto.appspot.com/o/animations%2Ftarget_animation.gif?alt=media&token=ef598681-fed9-4a55-84a5-e63689cf533b"
 							/>
 						</SectionMain>
 						<SectionMain miniPadding position="center">

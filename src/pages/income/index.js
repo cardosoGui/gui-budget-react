@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SectionMain from '../../components/SectionMain'
 import HeaderBackgroundUI from '../../components/HeaderBackgroundUI'
 import Title from '../../components/Title'
-import { makeStyles, Fade, Button, InputBase } from '@material-ui/core'
+import { makeStyles, Fade, InputBase, Fab } from '@material-ui/core'
 import toCurrency from '../../utils/toCurrency'
 import { Formik } from 'formik'
 import NumericInput from '../../components/NumericInput'
@@ -10,6 +10,12 @@ import { FiRepeat } from 'react-icons/fi'
 import { FaMinus, FaPlus, FaExchangeAlt, FaEdit, FaListUl, FaWallet, FaRegCalendarAlt } from 'react-icons/fa'
 import SelectInputUI from '../../components/SelectInputUI'
 import { useAppContext } from '../../store/AppContext'
+import TypeButtons from '../../components/TypeButtons'
+import Modal from '../../components/Modal'
+import CategoriesList from '../../components/CategoriesList'
+import AddIcon from '@material-ui/icons/Add'
+import api from '../../core/api'
+import LoaderSpinner from '../../components/LoaderSpinner'
 
 const useStyles = makeStyles({
 	amount: {
@@ -19,52 +25,13 @@ const useStyles = makeStyles({
 		padding: 0,
 		width: 'inherit'
 	},
-	typeButton: {
-		display: 'flex',
-		flexDirection: 'column'
-	},
-	bulletPoint: {
-		height: 0,
-		color: '#fff'
-	}
+	fabButton: { background: ({ color }) => color, bottom: 20, position: 'absolute' }
 })
 
 const IncomePage = () => {
-	const classes = useStyles()
 	const { colorSchema } = useAppContext()
-
-	const TypeButtons = ({ formikProps }) => {
-		const typeIncomeButtons = [
-			{ type: 'expense', label: 'Despesa', bgColor: 'danger' },
-			{ type: 'income', label: 'Receita', bgColor: 'primary' },
-			{ type: 'transference', label: 'Transferência', bgColor: 'info' }
-		]
-
-		const selectedType = formikProps.values.type
-
-		const onChangeType = (type, bgColor) => {
-			formikProps.setFieldValue('backgroundColor', bgColor)
-			formikProps.setFieldValue('type', type)
-		}
-		return (
-			<SectionMain noPadding position="space-between">
-				{typeIncomeButtons.map(({ type, label, bgColor }) => (
-					<Button variant="text" onClick={() => onChangeType(type, bgColor)}>
-						<SectionMain className={classes.typeButton}>
-							<Title color="#fff" size="xsmall">
-								{label}
-							</Title>
-							<Title color="#fff" size="xsmall" className={classes.bulletPoint}>
-								<Fade in={selectedType === type ? true : false}>
-									<span>&#8226;</span>
-								</Fade>
-							</Title>
-						</SectionMain>
-					</Button>
-				))}
-			</SectionMain>
-		)
-	}
+	const classes = useStyles({ color: colorSchema['primary'] })
+	const [ open, setOpen ] = useState(null)
 
 	const typeSymbols = {
 		expense: <FaMinus fontSize={25} color="#fff" />,
@@ -72,9 +39,44 @@ const IncomePage = () => {
 		transference: <FaExchangeAlt fontSize={25} color="#fff" />
 	}
 
+	const stackPageSection = {
+		category: { title: 'Categoria', renderSection: <CategoriesList /> },
+		account: { title: 'Conta/Despesa', renderSection: <CategoriesList /> },
+		date: { title: 'Data', renderSection: <CategoriesList /> },
+		recurrence: { title: 'Recorrência', renderSection: <CategoriesList /> }
+	}
+
+	const onSubmit = (values, setSubmitting) => {
+		const form = {
+			amount: Number(values.amount),
+			type: values.type,
+			description: values.description,
+			account: values.account,
+			date: values.date,
+			recurrence: values.recurrence
+		}
+
+		try {
+			api.post('/transactions', form).then((res) => {
+				if (res.status === 200) {
+					alert('deu certo mlk')
+					setSubmitting(false)
+				}
+			})
+		} catch (e) {
+			setSubmitting(false)
+			console.log({ e })
+		}
+	}
+
 	return (
 		<Fade in={true}>
 			<SectionMain noPadding>
+				{open && (
+					<Modal openModal={open} title={stackPageSection[open].title} handleClose={() => setOpen(null)}>
+						{stackPageSection[open].renderSection}
+					</Modal>
+				)}
 				<Formik
 					initialValues={{
 						amount: '',
@@ -87,65 +89,88 @@ const IncomePage = () => {
 						backgroundColor: 'danger',
 						showNumericInput: true
 					}}
+					onSubmit={(values, formikProps) => onSubmit(values, formikProps.setSubmitting)}
 				>
-					{(formikProps) => (
-						<form className={classes.form}>
-							<HeaderBackgroundUI
-								backgroundColor={formikProps.values.backgroundColor}
-								rightComponent={<TypeButtons formikProps={formikProps} />}
-							>
-								<SectionMain
-									position="flex-end"
-									alignItems="center"
-									onClick={() =>
-										formikProps.values.showNumericInput === false &&
-										formikProps.setFieldValue('showNumericInput', true)}
+					{(formikProps) =>
+						formikProps.isSubmitting ? (
+							<LoaderSpinner loading={formikProps.isSubmitting} />
+						) : (
+							<form action="javascript:void(0)" className={classes.form}>
+								<HeaderBackgroundUI
+									backgroundColor={formikProps.values.backgroundColor}
+									rightComponent={<TypeButtons formikProps={formikProps} />}
 								>
-									<Title color="#fff" size="big">
-										<code className={classes.amount}>{toCurrency(formikProps.values.amount)}</code>
-									</Title>
-									&nbsp;
-									{typeSymbols[formikProps.values.type]}
+									<SectionMain
+										position="flex-end"
+										alignItems="center"
+										onClick={() =>
+											formikProps.values.showNumericInput === false &&
+											formikProps.setFieldValue('showNumericInput', true)}
+									>
+										<Title color="#fff" size="big">
+											<code className={classes.amount}>
+												{toCurrency(formikProps.values.amount)}
+											</code>
+										</Title>
+										&nbsp;
+										{typeSymbols[formikProps.values.type]}
+									</SectionMain>
+								</HeaderBackgroundUI>
+								<SectionMain>
+									<SelectInputUI icon={<FaEdit fontSize={30} color={colorSchema['primary']} />}>
+										<InputBase
+											placeholder="Escreva sobre a despesa"
+											onChange={(e) => formikProps.setFieldValue('description', e.target.value)}
+											id="standard-basic"
+											value={formikProps.values.description}
+											inputProps={{ 'aria-label': 'naked' }}
+											fullWidth
+											multiline
+											rowsMax={3}
+										/>
+									</SelectInputUI>
+									<SelectInputUI
+										onClick={() => setOpen('category')}
+										titleText="Categoria"
+										icon={<FaListUl fontSize={30} color={colorSchema['primary']} />}
+									>
+										Selecione uma categoria de gastos
+									</SelectInputUI>
+									<SelectInputUI
+										onClick={() => setOpen('account')}
+										titleText="Conta/Carteira"
+										icon={<FaWallet fontSize={30} color={colorSchema['primary']} />}
+									>
+										Escolha uma conta
+									</SelectInputUI>
+									<SelectInputUI
+										onClick={() => setOpen('date')}
+										titleText="Data"
+										icon={<FaRegCalendarAlt fontSize={30} color={colorSchema['primary']} />}
+									>
+										{new Date().toLocaleDateString()}
+									</SelectInputUI>
+									<SelectInputUI
+										onClick={() => setOpen('recurrence')}
+										titleText="Recorrência"
+										icon={<FiRepeat fontSize={30} color={colorSchema['primary']} />}
+									>
+										Decida entre gasto fixo/temporário
+									</SelectInputUI>
 								</SectionMain>
-							</HeaderBackgroundUI>
-							<SectionMain>
-								<SelectInputUI icon={<FaEdit fontSize={30} color={colorSchema['primary']} />}>
-									<InputBase
-										id="standard-basic"
-										defaultValue="Escreva sobre a despesa"
-										inputProps={{ 'aria-label': 'naked' }}
-										fullWidth
-									/>
-								</SelectInputUI>
-								<SelectInputUI
-									titleText="Categoria"
-									icon={<FaListUl fontSize={30} color={colorSchema['primary']} />}
-								>
-									Selecione uma categoria de gastos
-								</SelectInputUI>
-								<SelectInputUI
-									titleText="Conta/Carteira"
-									icon={<FaWallet fontSize={30} color={colorSchema['primary']} />}
-								>
-									Escolha uma conta
-								</SelectInputUI>
-								<SelectInputUI
-									titleText="Data"
-									icon={<FaRegCalendarAlt fontSize={30} color={colorSchema['primary']} />}
-								>
-									{new Date().toLocaleDateString()}
-								</SelectInputUI>
-								<SelectInputUI
-									titleText="Recorrência"
-									icon={<FiRepeat fontSize={30} color={colorSchema['primary']} />}
-								>
-									Decida entre gasto fixo/temporário
-								</SelectInputUI>
-							</SectionMain>
 
-							<NumericInput formikProps={formikProps} />
-						</form>
-					)}
+								<NumericInput formikProps={formikProps} />
+								<SectionMain noPadding position="center">
+									<Fab
+										aria-label="add"
+										className={classes.fabButton}
+										onClick={formikProps.handleSubmit}
+									>
+										<AddIcon htmlColor="#fff" />
+									</Fab>
+								</SectionMain>
+							</form>
+						)}
 				</Formik>
 			</SectionMain>
 		</Fade>

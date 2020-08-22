@@ -1,9 +1,9 @@
 import React from 'react'
-import { makeStyles, IconButton } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
 import { useAppContext } from '../../store/AppContext'
 import SectionMain from '../SectionMain'
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import { useHistory } from 'react-router-dom'
+import BackButton from '../BackButton'
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -28,9 +28,7 @@ const HeaderBackgroundUI = ({ children, rightComponent, backgroundColor = 'prima
 		<SectionMain className={classes.root}>
 			<SectionMain noPadding>
 				<SectionMain noPadding item xs={2}>
-					<IconButton size="small" onClick={() => history.goBack()}>
-						<ArrowBackIosIcon className={classes.iconButton} htmlColor="#fff" />
-					</IconButton>
+					<BackButton onClick={() => history.goBack()} />
 				</SectionMain>
 				<SectionMain noPadding item xs={10} position="flex-end">
 					{rightComponent}

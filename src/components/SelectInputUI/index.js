@@ -7,12 +7,12 @@ const useStyles = makeStyles({
 	amountLabel: { margin: '10px 0' }
 })
 
-const SelectInputUI = ({ titleText, icon, modalComponent, children }) => {
+const SelectInputUI = ({ titleText, icon, onClick, children }) => {
 	const classes = useStyles()
 
 	return (
 		<SectionMain noPadding>
-			<ListItem className={classes.root} button>
+			<ListItem className={classes.root} button onClick={onClick}>
 				<ListItemAvatar>{icon}</ListItemAvatar>
 				<ListItemText className={classes.secondary} primary={titleText} secondary={children} />
 			</ListItem>

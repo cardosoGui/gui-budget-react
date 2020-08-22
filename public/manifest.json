@@ -1,6 +1,6 @@
 {
-	"short_name": "GUI-Budget",
-	"name": "GUI-Budget",
+	"short_name": "MeuGasto",
+	"name": "MeuGasto",
 	"icons": [
 		{
 			"src": "favicon.ico",
