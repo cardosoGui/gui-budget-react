@@ -13,7 +13,17 @@ const useStyles = makeStyles({
 	}
 })
 
-const Title = ({ size, align, capitalize, type = 'regular', variant, color = '#282828', fontWeight, children }) => {
+const Title = ({
+	size,
+	align,
+	capitalize,
+	type = 'regular',
+	variant,
+	color = '#282828',
+	fontWeight,
+	children,
+	...props
+}) => {
 	const { theme, colorSchema } = useAppContext()
 	const weight = { bold: '600', regular: '400' }
 	fontWeight = fontWeight ? fontWeight : weight[type]
@@ -29,7 +39,7 @@ const Title = ({ size, align, capitalize, type = 'regular', variant, color = '#2
 	})
 
 	return (
-		<Typography className={classes.root} id="title-text">
+		<Typography className={classes.root} id="title-text" {...props}>
 			{children}
 		</Typography>
 	)

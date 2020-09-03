@@ -5,6 +5,7 @@ body {
 
 .MuiTypography-root,
 .MuiTab-wrapper,
-html {
+html,
+button {
 	font-family: 'Oxygen', sans-serif !important;
 }
