@@ -12,6 +12,7 @@
 		"formik": "^2.1.5",
 		"history": "^5.0.0",
 		"loaders.css": "^0.1.2",
+		"material-auto-rotating-carousel": "^3.0.2",
 		"moment": "^2.27.0",
 		"notistack": "^0.9.17",
 		"react": "^16.13.1",
@@ -20,6 +21,7 @@
 		"react-loaders": "^3.0.1",
 		"react-router-dom": "^5.2.0",
 		"react-scripts": "3.4.1",
+		"react-swipeable-views": "^0.13.9",
 		"yup": "^0.29.3"
 	},
 	"scripts": {
